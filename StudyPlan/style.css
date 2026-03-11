@@ -1,0 +1,414 @@
+/* =========================================
+   1. TEMEL AYARLAR VE RENK PALETİ (VARIABLES)
+   ========================================= */
+:root {
+    /* --- AYDINLIK MOD (LIGHT) --- */
+    --primary-color: #ff7a00;       /* Ana Marka Rengi */
+    --primary-hover: #e66e00;       /* Buton Hover */
+    
+    --bg-body: #f4f7f6;             /* Sayfa Arka Planı */
+    --bg-surface: #ffffff;          /* Kart/Panel Arka Planı */
+    --bg-input: #ffffff;            /* Input Arka Planı */
+    
+    --text-main: #2c3e50;           /* Ana Yazı Rengi */
+    --text-muted: #7f8c8d;          /* İkincil Yazı Rengi */
+    --text-inverse: #ffffff;        /* Koyu zemin üzerindeki yazı */
+    
+    --border-color: #e0e0e0;        /* Çerçeveler */
+    --shadow-sm: 0 2px 5px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 15px rgba(0,0,0,0.1);
+
+    /* Sidebar */
+    --sidebar-bg: #2c3e50;
+    --sidebar-text: #ecf0f1;
+    --sidebar-input-bg: rgba(255,255,255,0.1);
+}
+
+/* --- KARANLIK MOD (DARK) --- */
+body.dark-mode {
+    --bg-body: #121212;             /* Koyu Arka Plan */
+    --bg-surface: #1e1e1e;          /* Kartlar */
+    --bg-input: #2c2c2c;            /* Inputlar */
+    
+    --text-main: #e0e0e0;           /* Açık Gri Yazı */
+    --text-muted: #a0a0a0;
+    
+    --border-color: #333333;
+    --shadow-sm: 0 2px 5px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 15px rgba(0,0,0,0.5);
+
+    --sidebar-bg: #000000;
+}
+
+/* =========================================
+   2. GENEL SIFIRLAMA VE YAPI
+   ========================================= */
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    margin: 0; padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-body); }
+::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+a { text-decoration: none; color: var(--primary-color); font-weight: 500; transition: 0.2s; }
+a:hover { color: var(--primary-hover); }
+
+/* =========================================
+   3. LAYOUT (DÜZEN)
+   ========================================= */
+.dashboard-wrapper { display: flex; min-height: 100vh; }
+
+.sidebar {
+    width: 260px;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    padding: 25px;
+    display: flex; flex-direction: column;
+    border-right: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    background-color: var(--bg-body);
+}
+
+/* =========================================
+   4. KARTLAR VE KUTULAR
+   ========================================= */
+.card {
+    background-color: var(--bg-surface);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 25px;
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+.auth-container { display: flex; justify-content: center; align-items: center; height: 100vh; }
+.auth-box {
+    background: var(--bg-surface); padding: 40px; border-radius: 12px;
+    box-shadow: var(--shadow-md); width: 100%; max-width: 400px; text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+/* =========================================
+   5. FORM ELEMANLARI (DÜZELTİLDİ)
+   ========================================= */
+/* BURAYA 'input[type="email"]' EKLENDİ */
+input[type="text"], 
+input[type="number"], 
+input[type="date"], 
+input[type="password"], 
+input[type="email"], 
+select {
+    width: 100%; padding: 12px 15px; margin: 10px 0;
+    border: 1px solid var(--border-color); border-radius: 8px;
+    background-color: var(--bg-input); color: var(--text-main);
+    font-size: 14px; outline: none; transition: 0.3s;
+}
+
+input:focus, select:focus { 
+    border-color: var(--primary-color); 
+    box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.1); 
+}
+
+button {
+    width: 100%; padding: 12px; background-color: var(--primary-color);
+    color: white; border: none; border-radius: 8px;
+    font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 14px;
+}
+button:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
+
+/* Özel Butonlar */
+.btn-red { background-color: #e74c3c !important; color: white !important; }
+.btn-red:hover { background-color: #c0392b !important; }
+.btn-green { background-color: #27ae60 !important; }
+.btn-green:hover { background-color: #219150 !important; }
+
+/* =========================================
+   6. TABLOLAR
+   ========================================= */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 10px;
+    background: var(--bg-surface);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th {
+    background-color: var(--bg-body);
+    color: var(--text-muted); /* Varsayılan gri */
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    padding: 15px;
+    border-bottom: 2px solid var(--border-color);
+    text-align: left;
+}
+
+body.dark-mode th {
+    color: #ffffff !important;   /* Bembeyaz yazı */
+    background-color: #2c2c2c;   /* Biraz daha açık gri zemin */
+    border-bottom: 2px solid #444;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background-color: rgba(0,0,0,0.02); }
+
+/* =========================================
+   7. SIDEBAR ÖZEL
+   ========================================= */
+.sidebar-search-box {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 15px; margin: 20px 0; border-radius: 8px;
+}
+.sidebar-search-box h4 { color: rgba(255,255,255,0.7); margin: 0 0 10px 0; font-size: 12px; text-transform: uppercase; }
+.search-input-group input {
+    background-color: var(--sidebar-input-bg) !important;
+    color: white !important; border: 1px solid rgba(255,255,255,0.1);
+}
+.friend-list li { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 12px 5px; }
+
+/* =========================================
+   8. AYARLAR MODAL
+   ========================================= */
+.settings-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(3px); z-index: 999;
+}
+.settings-panel {
+    display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background-color: var(--bg-surface); color: var(--text-main);
+    width: 320px; padding: 30px; border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3); z-index: 1000; text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+/* =========================================
+   9. DİĞER BİLEŞENLER
+   ========================================= */
+.tab-container { border-bottom: 2px solid var(--border-color); margin-bottom: 20px; }
+.tab-btn {
+    padding: 10px 20px; background: none; border: none; font-size: 15px;
+    color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent;
+}
+.tab-btn.active { color: var(--primary-color); border-bottom-color: var(--primary-color); font-weight: bold; }
+
+.custom-checkbox { width: 20px; height: 20px; accent-color: var(--primary-color); cursor: pointer; }
+
+/* Buton Grupları ve İkonlar */
+.btn-action-group { display: flex; gap: 8px; justify-content: flex-end; align-items: center; }
+.btn-start { 
+    background-color: rgba(39, 174, 96, 0.1); color: var(--primary-color); 
+    padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; 
+    border: 1px solid var(--primary-color); cursor: pointer; transition: 0.2s; 
+    display: inline-flex; align-items: center; gap: 5px; text-decoration:none;
+}
+.btn-start:hover { background-color: var(--primary-color); color: #fff; }
+
+.btn-delete {
+    background: transparent; color: #e74c3c; width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid #e74c3c; cursor: pointer; transition: 0.2s; text-decoration: none;
+}
+.btn-delete:hover { background-color: #e74c3c; color: white; }
+
+/* =========================================
+   10. ODAK (ZEN) MODU - ZORLAYICI DÜZELTME
+   ========================================= */
+
+/* 1. Arka Plan Perdesi (Simsiyah) */
+.focus-overlay-bg {
+    display: none; 
+    position: fixed; 
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #000000; /* Tam siyah */
+    z-index: 9998; /* Her şeyin üstünde */
+    opacity: 0.95; /* Hafif geçirgenlik */
+}
+
+/* 2. Scroll'u kapat (Sayfa kaymasın) */
+body.focus-mode-active {
+    overflow: hidden !important;
+}
+
+/* 3. Kartın Kendisi (Tam Ortala ve Öne Çıkar) */
+.focus-mode-card {
+    position: fixed !important; /* Sayfadan kopar */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 0 !important; /* Kenar boşluklarını sıfırla */
+    z-index: 9999 !important; /* Perdenin de üstünde */
+    
+    width: 90% !important;
+    max-width: 500px !important;
+    
+    /* Zen modu her zaman koyu tema olsun */
+    background-color: #121212 !important; 
+    color: #ffffff !important;
+    border: 2px solid #333 !important;
+    box-shadow: 0 0 100px rgba(39, 174, 96, 0.5) !important; /* Yeşil neon parlama */
+    border-radius: 20px !important;
+}
+
+/* 4. Kart İçindeki Yazıları Zorla Beyaz Yap */
+.focus-mode-card h2 { color: #ffffff !important; }
+.focus-mode-card span { color: #cccccc !important; }
+.focus-mode-card p { color: #aaaaaa !important; }
+.focus-mode-card #timer-display { 
+    color: #27ae60 !important; 
+    text-shadow: 0 0 30px rgba(39, 174, 96, 0.5);
+}
+
+/* 5. Çıkış Butonunu Görünür Yap */
+.focus-mode-card #exit-focus-btn {
+    display: inline-block !important;
+    margin-top: 20px;
+    padding: 8px 20px;
+    border: 1px solid #555;
+    color: #888;
+    background: transparent;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.focus-mode-card #exit-focus-btn:hover {
+    color: white;
+    border-color: white;
+}
+/* --- BİLDİRİM SİSTEMİ STİLLERİ (EN ALTA EKLE) --- */
+.notification-area {
+    position: relative;
+    cursor: pointer;
+    margin-left: auto; /* Sağa yaslar */
+    margin-right: 20px;
+}
+
+.notif-bell {
+    position: relative;
+    padding: 10px;
+    background: var(--bg-surface);
+    border-radius: 50%;
+    box-shadow: var(--shadow-sm);
+    transition: 0.3s;
+}
+.notif-bell:hover { background-color: #f0f0f0; }
+
+.notif-badge {
+    position: absolute; top: -2px; right: -2px;
+    background: #e74c3c; color: white;
+    border-radius: 50%; width: 18px; height: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: bold;
+    border: 2px solid var(--bg-surface);
+}
+
+.notif-dropdown {
+    display: none; /* Varsayılan gizli */
+    position: absolute; right: 0; top: 50px;
+    width: 320px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    z-index: 9999; /* En üstte durması için */
+    overflow: hidden;
+}
+
+/* Javascript ile 'aktif' classı eklenince görünür */
+.notif-dropdown.aktif { display: block; }
+
+.notif-header {
+    padding: 15px; border-bottom: 1px solid var(--border-color);
+    font-weight: bold; font-size: 14px; background: var(--bg-body);
+    color: var(--text-main);
+}
+
+.notif-list { max-height: 350px; overflow-y: auto; }
+
+.notif-item {
+    padding: 12px 15px; border-bottom: 1px solid var(--border-color);
+    font-size: 13px; color: var(--text-main);
+    display: flex; flex-direction: column; gap: 5px;
+}
+.notif-item:hover { background-color: rgba(0,0,0,0.03); }
+.notif-item.unread { background-color: rgba(255, 122, 0, 0.05); border-left: 3px solid var(--primary-color); }
+
+/* =========================================
+   FOOTER (ALT BİLGİ) TASARIMI
+   ========================================= */
+.app-footer {
+    margin-top: 50px; /* İçerikten biraz uzak olsun */
+    padding: 20px 0;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.app-footer strong {
+    color: var(--primary-color);
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.app-footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.app-footer a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.app-footer .version {
+    background: rgba(0,0,0,0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: monospace;
+}
+
+/* Mobilde alt alta geçsin */
+@media (max-width: 768px) {
+    .app-footer {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+.notif-actions { display: flex; gap: 10px; margin-top: 5px; }
+.btn-approve { background: #27ae60; color: white; padding: 5px 10px; border-radius: 4px; text-decoration: none; font-size: 11px; }
+.btn-reject { background: #e74c3c; color: white; padding: 5px 10px; border-radius: 4px; text-decoration: none; font-size: 11px; }
